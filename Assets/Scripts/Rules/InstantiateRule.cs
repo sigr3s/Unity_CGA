@@ -16,6 +16,15 @@ public class InstantiateRule : IRule {
                ig.transform.localPosition = context.current.position;
                ig.transform.localRotation = context.current.rotation;
                ig.transform.localScale = context.current.scale;
+               string[] targets = ParsingHelper.GetDest(input);
+               if(targets.Length > 0){
+                   context.namedObjects.Add(targets[0], ig);
+                   ig.name = targets[0];
+               }
+               else
+               {
+                   Debug.Log("no target");
+               }
             }
 		}
 	}

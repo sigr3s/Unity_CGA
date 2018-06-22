@@ -15,6 +15,7 @@ public class CGAInterpreter : MonoBehaviour {
 		context =new CGAContext();
 		context.current = new CGATransform {position = Vector3.zero, rotation = Quaternion.identity, scale = Vector3.one};
 		context.root = root.transform;
+		context.namedObjects = new Dictionary<string, GameObject>();
 		context.stack = new Stack<CGATransform>();
 		ProcessInput(inputs);
 	}
