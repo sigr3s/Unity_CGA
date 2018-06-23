@@ -7,7 +7,7 @@ public struct CGAContext  {
 	public Transform root;
 	public CGATransform current;
 	public Stack<CGATransform> stack;
-	public Dictionary<string, GameObject> namedObjects;
+	public Dictionary<string, List<GameObject>> namedObjects;
 }
 
 [System.Serializable]

@@ -8,4 +8,6 @@ public class RuleSet : ScriptableObject {
 	public RotationRule rotiationRule;
 	public ScaleRule scaleRule;
 	public PushPopRule pushPopRule;
+	public SplitRule splitRule;
+	public ExtrudeRule extrudeRule;
 }
