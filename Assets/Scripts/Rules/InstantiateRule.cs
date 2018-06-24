@@ -43,6 +43,7 @@ public class InstantiateRule : IRule {
                         }
                         ig.name = destinations[0];
                     }
+                    ig.GetComponent<Renderer>().material = context.material;
 
                 }
                 else{
@@ -64,6 +65,7 @@ public class InstantiateRule : IRule {
                             }
                             ig.name = destinations[0];
                         }
+                        ig.GetComponent<Renderer>().material = context.material;
                     }
                     
 
