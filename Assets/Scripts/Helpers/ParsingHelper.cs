@@ -51,4 +51,56 @@ public static class ParsingHelper{
         }
     }
 
+    public static CSF CSFValues(string input){
+        string csv = input.Substring(input.IndexOf("(")+1, input.IndexOf(")") - input.IndexOf("(") - 1 );
+        string[] values =  csv.Split(',');
+        CSF csf = new CSF { orderedCSF = new List<OCSF>(), fixedValues = new List<float>(), relativeValues = new List<int>() };
+        float f;
+        int fi;
+        
+        foreach(string v in values){
+            
+            if(v.Contains("r")){
+                string intv = v.Replace("r", string.Empty);
+                if(int.TryParse(intv, NumberStyles.Any, CultureInfo.InvariantCulture, out fi)){
+                    csf.relativeValues.Add(fi);
+                    OCSF ocsf = new OCSF { index = csf.relativeValues.Count-1,isRelative = true};
+                    csf.orderedCSF.Add(ocsf);
+                }
+            }
+            else{
+                if(float.TryParse(v, NumberStyles.Any, CultureInfo.InvariantCulture, out f)){
+                    csf.fixedValues.Add(f);
+                    OCSF ocsf = new OCSF { index = csf.fixedValues.Count-1,isRelative = false};
+                    csf.orderedCSF.Add(ocsf);
+                }
+            }
+        }
+
+        return csf;
+    }
+
+    public static float ExtractProbavility(string input){
+        if(input.Contains(":")){
+            string[] t = input.Split(new string[] { ":" }, StringSplitOptions.None);
+            float f;
+            if(float.TryParse(t[1], NumberStyles.Any, CultureInfo.InvariantCulture, out f)){
+                return f;
+            }
+            else return 1f;
+        }
+        else return 1f;
+    }
+
+}
+
+public struct CSF{
+    public List<OCSF> orderedCSF;
+    public List<float> fixedValues;
+    public List<int> relativeValues;    
+}
+
+public struct OCSF{
+    public int index;
+    public bool isRelative;
 }

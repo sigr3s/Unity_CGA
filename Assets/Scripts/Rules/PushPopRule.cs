@@ -12,7 +12,7 @@ public class PushPopRule : IRule
            context.stack.Push(context.current);
        }
        else if (input == "]"){
-           context.current = context.stack.Pop();
+           if(context.stack != null && context.stack.Count>0) context.current = context.stack.Pop();
        }   
     }
 

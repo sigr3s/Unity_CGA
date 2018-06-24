@@ -10,6 +10,7 @@ public class UIRuleEditor : MonoBehaviour {
 	public Transform content;
 	public GameObject prefab;
 	public InputField input;
+	public InputField jsonInp;
 	public CGAInterpreter interp;
 	public GameObject ErrorPanel;
 	public OnItemRemoved onElementRemoved = new OnItemRemoved();
@@ -65,6 +66,27 @@ public class UIRuleEditor : MonoBehaviour {
 			if(allChildren[ac].gameObject != content.gameObject) Destroy(allChildren[ac].gameObject);
 		}
 	}
+
+	public void ShowCurrentJSON(){
+		Creation c = new Creation{rules = rules, version = "1.0"};
+		string json = JsonUtility.ToJson(c, true);
+		jsonInp.text = json;
+	}
+
+	public void LoadFromJSON(){
+		if(!string.IsNullOrEmpty(jsonInp.text)){
+			Creation c = JsonUtility.FromJson<Creation>(jsonInp.text);
+			if(c.rules != null && c.rules.Count > 0){
+				CleanList();
+				foreach(string s in c.rules){
+					AddRule(s);
+				}
+				Process();
+			}
+		}
+
+	}
+
 }
 
 [System.Serializable]

@@ -14,7 +14,6 @@ public class ExtrudeRule : IRule {
         List<GameObject> t= null;
         if(!string.IsNullOrEmpty(target) && context.namedObjects.ContainsKey(target)){
             t = context.namedObjects[target];
-            float size;
             foreach(GameObject g in t){
                 switch(sa){
                     case ExtrudeAxis.X:

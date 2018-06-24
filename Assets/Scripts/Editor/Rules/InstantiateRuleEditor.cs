@@ -28,7 +28,7 @@ public class InstantiateRuleEditor : Editor
                 return;
             }
             EditorGUILayout.EndHorizontal();
-            ir.options[i].primitive =(PrimitiveType) EditorGUILayout.EnumPopup ("Primitive", ir.options[i].primitive, options);                
+            ir.options[i].primitive =(CGAPrimitive) EditorGUILayout.EnumPopup ("Primitive", ir.options[i].primitive, options);                
             GUILayout.Space(5);  
         }
         if (GUILayout.Button("Add Option", GUILayout.ExpandWidth(false))) 

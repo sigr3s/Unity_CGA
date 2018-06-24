@@ -21,11 +21,14 @@ public class InstantiateRule : IRule {
 			if(option.name == primitive){
 
                 if(targetRoots == null){
-		            GameObject ig =   GameObject.CreatePrimitive(option.primitive);
+                    
+		            GameObject ig = InstantiateCorrect(option.primitive, option);
                     ig.transform.SetParent(context.root);
                     ig.transform.localPosition = context.current.position;
-                    if(option.primitive == PrimitiveType.Cube) ig.transform.localPosition += new Vector3(0 , context.current.scale.y/2, 0);
+
+                    if(option.primitive == CGAPrimitive.Cube) ig.transform.localPosition += new Vector3(0 , context.current.scale.y/2, 0);
                     else ig.transform.localPosition+= new Vector3(0 , context.current.scale.y, 0);
+                    
                     ig.transform.localRotation = context.current.rotation;
                     ig.transform.localScale = context.current.scale;
                     
@@ -44,7 +47,7 @@ public class InstantiateRule : IRule {
                 }
                 else{
                     foreach(GameObject tr in targetRoots){
-                        GameObject ig =   GameObject.CreatePrimitive(option.primitive);
+                        GameObject ig =  InstantiateCorrect(option.primitive, option);
                         ig.transform.SetParent(tr.transform);
                         ig.transform.localPosition = Vector3.zero;
                         ig.transform.localRotation = Quaternion.identity;
@@ -69,6 +72,25 @@ public class InstantiateRule : IRule {
 		}
 	}
 
+    GameObject InstantiateCorrect(CGAPrimitive prim, InstantiateOption option){
+        GameObject g = null;
+        switch(prim){
+            case CGAPrimitive.Cube:
+                g = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            break;
+            case CGAPrimitive.Sphere:
+                g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            break;
+            case CGAPrimitive.Cylinder:
+                g = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            break;
+            default:
+                g = GameObject.Instantiate(option.go);
+            break;
+        }
+        return g;
+    }
+
 	public void Validate()
 	{	
         throw new System.NotImplementedException();
@@ -91,5 +113,15 @@ public class InstantiateRule : IRule {
 [System.Serializable]
 public class InstantiateOption{
 	public string name;
-    public PrimitiveType primitive;
+    public CGAPrimitive primitive;
+    public GameObject go;
+}
+
+public enum CGAPrimitive{
+    Cube, 
+    Sphere,
+    Cylinder,
+    Roof,
+    Window,
+    Other
 }

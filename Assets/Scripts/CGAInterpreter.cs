@@ -10,11 +10,13 @@ public class CGAInterpreter : MonoBehaviour {
 #region Editor public vars
 	public RuleSet rules;
 	public List<string> inputs;
+	public Creation cr;
 #endregion
 
 #region Private vars
 	CGAContext context;
 	GameObject root;
+
 #endregion
 	void Start () {
 		root = new GameObject("ROOT");
@@ -24,6 +26,7 @@ public class CGAInterpreter : MonoBehaviour {
 		context.namedObjects = new Dictionary<string, List<GameObject>>();
 		context.stack = new Stack<CGATransform>();
 		ProcessInput(inputs);
+		FocusCameraOnGameObject(Camera.main, root);
 	}
 
 	public void CleanScene(){
@@ -43,10 +46,37 @@ public class CGAInterpreter : MonoBehaviour {
 	}
 	
 	void ProcessInput(List<string> inp){
+		float accumulatedP = 0;
+		List<RandomIRule> percRules = new List<RandomIRule>();
+
 		for(int i = 0; i < inp.Count; i++){
 			IRule ir = GetRuleForInput(inp[i]);
 			if(ir != null){
-				ir.Execute(inp[i], ref context);
+				float per = ParsingHelper.ExtractProbavility(inp[i]);
+				if(per == 1 && accumulatedP == 0) ir.Execute(inp[i], ref context);
+				else{
+					accumulatedP += per;
+					percRules.Add(new RandomIRule{rule = ir, p = per,inputString = inp[i]});
+					
+					if(accumulatedP >= 1.0f){ // maybe errors?
+						float cp = Random.Range(0.0f, 1.0f);
+
+						float acp = 0;
+						bool selected = false;
+						for(int j = 0; j < percRules.Count; j++){
+							RandomIRule irl = percRules[j];
+							acp += irl.p;
+							
+							if(acp > cp && !selected){
+								irl.rule.Execute(irl.inputString, ref context);
+								selected = true;;
+							}
+						}
+						
+						accumulatedP = 0;
+						percRules = new List<RandomIRule>();
+					}	
+				}
 			}
 		}
 	}
@@ -67,6 +97,9 @@ public class CGAInterpreter : MonoBehaviour {
 			}
 			if(Regex.IsMatch(i, rules.pushPopRule.pattern, RegexOptions.IgnoreCase)){
 				return rules.pushPopRule;
+			}
+			if(Regex.IsMatch(i, rules.splitRule.pattern, RegexOptions.IgnoreCase)){
+				return rules.splitRule;
 			}
 		}
 		Debug.LogWarning("No matching found for input " + i);
@@ -91,4 +124,17 @@ public class CGAInterpreter : MonoBehaviour {
 		c.transform.LookAt(b.center);
 	}
 
+}
+
+[System.Serializable]
+public struct RandomIRule{
+	public IRule rule;
+	public float p;
+	public string inputString;
+}
+
+[System.Serializable]
+public struct Creation{
+	public List<string> rules;
+	public string version;
 }
