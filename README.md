@@ -99,7 +99,7 @@ The string that corresponds with the subdivision of the object from fixed values
         
         target=>Sub("Y",0.2,0.5,0.3){a,b,c}
 
-The first "_" values is the axis and can be (X,Y or Z) followed by n comma separated values that are the n desired parts so we can have more than two values. Also it suppoorts relative values with the keyword 2r where first we have an integer number followed by an r of relative. One example will be:
+The first "_" values is the axis and can be (X,Y or Z) followed by n comma separated values that are the n desired parts of the subdivision. Also it suppoorts relative values with the keyword Ir where first we have an integer number followed by an r of relative. One example will be:
         
         target=>Sub("X",2r,1r,0.3){a,b,c}
 
