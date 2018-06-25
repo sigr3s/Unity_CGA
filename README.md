@@ -47,11 +47,11 @@ The position rule **increments** the position in the given values.
 
 The string that corresponds with the increment of the context position is the following one:
         
-        P()
+        P(1.0,2.0,0.0)
 
 If you want to apply the position to a target (not to the context) you should specify the target:
 
-        target=>P()
+        target=>P(1.0,2.0,0.0)
 The position rule does not support a destination.
 
 ### Rotation
@@ -60,11 +60,11 @@ The rotation rule **increments** the rotation in the given values.
 
 The string that corresponds with the increment of the context rotation is the following one:
         
-        R()
+        R(0.0,45.0,45.0)
 
 If you want to apply the rotation to a target (not to the context) you should specify the target:
 
-        target=>R()
+        target=>R(0.0,45.0,45.0)
         
 The rotation rule does not support a destination.
 
@@ -74,16 +74,43 @@ The position rule **sets** the scale to the given values.
 
 The string that corresponds with the change of the scale in the context is the following one:
         
-        S()
+        S(1.0,2.0,1.0)
 
 If you want to apply the scale to a target (not to the context) you should specify the target:
 
-        target=>S()
+        target=>S(1.0,2.0,1.0)
         
 The scale rule does not support a destination.
 
 ### Push/Pop
 
-## Editor
+This rules are only applied to the context and are defined by the strings: 
+      
+      Push: [
+      Pop:  ]
+
+This operations affect the context by pushing the current context to and stack or poping a previous one.
+
+### Subdivision
+
+The subdivision rule **subdivides** subdivides the named object in the given parts.
+
+The string that corresponds with the subdivision of the object from fixed values (percentages) is the following one:
+        
+        target=>Sub("Y",0.2,0.5,0.3){a,b,c}
+
+The first "_" values is the axis and can be (X,Y or Z) followed by n comma separated values that are the n desired parts so we can have more than two values. Also it suppoorts relative values with the keyword 2r where first we have an integer number followed by an r of relative. One example will be:
+        
+        target=>Sub("X",2r,1r,0.3){a,b,c}
+
+In this case the 0.7% of the remaining space will be distributed as 2*(0.7/3) for a and 1*(0.7/3) for b.
+        
+The subdivision rule does not support context.
+
+## UI
+
 ![D1](https://github.com/sigr3s/Unity_CGA/blob/master/documentation/d1.PNG "")
 
+## JSON Serializations
+
+The rulesets can be serialized to a json format to later on reproduce them or in future version export/import them. This functionalities can be accesed from the  JSON urtilities button and then showing the current json or pasting a json and loading it.
