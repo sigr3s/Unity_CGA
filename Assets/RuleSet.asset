@@ -23,9 +23,15 @@ MonoBehaviour:
     - name: cylinder
       primitive: 2
       go: {fileID: 0}
-    - name: roof
+    - name: roofA
       primitive: 3
-      go: {fileID: 1210450549732442, guid: f8a851ad5044aac449e4623f627aac57, type: 2}
+      go: {fileID: 1107409386198722, guid: 5af13b66bcf951049a1a367572a4e57d, type: 2}
+    - name: roofB
+      primitive: 3
+      go: {fileID: 1133557162481220, guid: c914da1d7bf23bd4e8279fcabe403175, type: 2}
+    - name: window
+      primitive: 4
+      go: {fileID: 1174255511151522, guid: d146f3e110163884dacf51c2561e02eb, type: 2}
   positionRule:
     pattern: P\(-?[0-9]*(?:\.[0-9]*),-?[0-9]*(?:\.[0-9]*),-?[0-9]*(?:\.[0-9]*)\)
   rotiationRule:

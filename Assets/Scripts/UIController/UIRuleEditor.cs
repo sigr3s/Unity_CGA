@@ -15,6 +15,10 @@ public class UIRuleEditor : MonoBehaviour {
 	public GameObject ErrorPanel;
 	public OnItemRemoved onElementRemoved = new OnItemRemoved();
 
+	public List<string> ex0;
+	public List<string> ex1;
+	public List<string> ex2;
+	
 	
 	public void AddRule(){
 		if(!string.IsNullOrEmpty(input.text)){
@@ -71,6 +75,10 @@ public class UIRuleEditor : MonoBehaviour {
 		Creation c = new Creation{rules = rules, version = "1.0"};
 		string json = JsonUtility.ToJson(c, true);
 		jsonInp.text = json;
+		TextEditor te = new TextEditor();
+		te.text = json;
+		te.SelectAll();
+		te.Copy();
 	}
 
 	public void LoadFromJSON(){
@@ -85,6 +93,47 @@ public class UIRuleEditor : MonoBehaviour {
 			}
 		}
 
+	}
+
+	public void LoadExample(int i){
+		switch(i){
+			case 0:
+				rules.Clear();
+				foreach(string s in ex0){
+					AddRule(s);
+				}
+				interp.Process(rules);
+			break;
+			case 1:
+				rules.Clear();
+				foreach(string s in ex1){
+					AddRule(s);
+				}
+				interp.Process(rules);
+			break;
+			case 2:
+				rules.Clear();
+				foreach(string s in ex2){
+					AddRule(s);
+				}
+				interp.Process(rules);	
+			break;
+		}
+	}
+
+	[ContextMenu("S0")]
+	public void SaveToEX0(){
+		ex0 = rules;
+	}
+
+	[ContextMenu("S1")]
+	public void SaveToEX1(){
+		ex1 = rules;		
+	}
+	
+	[ContextMenu("S2")]
+	public void SaveToEX2(){
+		ex2 = rules;		
 	}
 
 }

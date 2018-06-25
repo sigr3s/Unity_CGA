@@ -65,7 +65,15 @@ public class InstantiateRule : IRule {
                             }
                             ig.name = destinations[0];
                         }
-                        ig.GetComponent<Renderer>().material = context.material;
+                        if(option.primitive == CGAPrimitive.Roof){
+                            ig.GetComponentInChildren<Renderer>().material = context.roofMat;
+                        }
+                        else if(option.primitive == CGAPrimitive.Window){
+                            ig.GetComponentInChildren<Renderer>().material = context.windMat;
+                        }
+                        else{
+                            ig.GetComponent<Renderer>().material = context.material;
+                        }
                     }
                     
 

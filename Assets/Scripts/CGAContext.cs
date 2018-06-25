@@ -9,6 +9,8 @@ public struct CGAContext  {
 	public Stack<CGATransform> stack;
 	public Dictionary<string, List<GameObject>> namedObjects;
 	public Material material;
+	public Material roofMat;
+	public Material windMat;
 }
 
 [System.Serializable]

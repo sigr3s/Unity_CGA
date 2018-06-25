@@ -34,6 +34,11 @@ public class SplitRule : IRule {
                 newg.transform.localPosition = g.transform.localPosition;
                 newg.transform.localRotation = g.transform.localRotation;
 
+                Transform[] trans = g.GetComponentsInChildren<Transform>();
+                foreach(Transform tra in trans){
+                    if(tra.gameObject != g) GameObject.Destroy(tra.gameObject);
+                }
+
                 GameObject tar = g;
                 Vector3 start = g.transform.position + g.transform.lossyScale/2; 
                 int s = csfVals.orderedCSF.Count;
@@ -72,6 +77,7 @@ public class SplitRule : IRule {
                 }
                 
                 float acumulatedPosition = 0;
+                List<GameObject> splits = new List<GameObject>();
 
                 for(int i = 1; i < s;i ++){
                     if(csfVals.orderedCSF[i-1].isRelative){
@@ -97,7 +103,7 @@ public class SplitRule : IRule {
 
                     splited[1].transform.SetParent(newg.transform);
                     splited[1].transform.localScale = Vector3.one;
-                    if(destinations != null && destinations.Length > i){
+                    if(destinations != null && destinations.Length > i && i == s-1){
                         string name = destinations[i];
                         splited[1].name = name;
                         if(context.namedObjects.ContainsKey(name) ){
@@ -107,6 +113,18 @@ public class SplitRule : IRule {
                             context.namedObjects.Add(name, new List<GameObject>(){splited[1]});
                         }
                     }
+
+                    if(i != s-1){
+                        splits.Add(splited[0]);
+                    }
+                    else{
+                        splits.Add(splited[0]);
+                        splits.Add(splited[1]);
+                    }
+                }
+
+                foreach(GameObject sgo in splits){
+                    MeshCut.UpdatePivot(sgo);
                 }
 
                 //Rebuild dict!

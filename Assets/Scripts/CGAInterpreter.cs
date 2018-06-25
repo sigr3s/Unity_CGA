@@ -12,6 +12,8 @@ public class CGAInterpreter : MonoBehaviour {
 	public List<string> inputs;
 	public Creation cr;
 	public Material mat;
+	public Material matR;
+	public Material matW;
 #endregion
 
 #region Private vars
@@ -27,6 +29,8 @@ public class CGAInterpreter : MonoBehaviour {
 		context.namedObjects = new Dictionary<string, List<GameObject>>();
 		context.stack = new Stack<CGATransform>();
 		context.material = mat;
+		context.roofMat = matR;
+		context.windMat = matW;
 		ProcessInput(inputs);
 		FocusCameraOnGameObject(Camera.main, root);
 	}
@@ -44,6 +48,8 @@ public class CGAInterpreter : MonoBehaviour {
 		context.namedObjects = new Dictionary<string, List<GameObject>>();
 		context.stack = new Stack<CGATransform>();
 		context.material = mat;
+		context.roofMat = matR;
+		context.windMat = matW;
 		ProcessInput(processedInputs);
 		FocusCameraOnGameObject(Camera.main, root);
 	}

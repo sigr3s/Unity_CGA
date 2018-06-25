@@ -148,7 +148,6 @@ public class MeshCut
         left_HalfMesh.normals = left_Final_normals.ToArray();
         left_HalfMesh.uv = left_Final_uvs.ToArray();
 
-
         Mesh right_HalfMesh = new Mesh();
         right_HalfMesh.name = "Split Mesh Right";
         right_HalfMesh.vertices = right_Final_vertices.ToArray();
@@ -161,15 +160,18 @@ public class MeshCut
         right_HalfMesh.uv = right_Final_uvs.ToArray();
 
         victim.name = "leftSide";
+        
         victim.GetComponent<MeshFilter>().mesh = left_HalfMesh;
 
-        Material[] mats = new Material[] { victim.GetComponent<MeshRenderer>().material, capMaterial };
+        Material[] mats = new Material[] { victim.GetComponent<MeshRenderer>().material, capMaterial };       
+
 
         GameObject leftSideObj = victim;
 
         GameObject rightSideObj = new GameObject("rightSide", typeof(MeshFilter), typeof(MeshRenderer));
         rightSideObj.transform.position = victim_transform.position;
         rightSideObj.transform.rotation = victim_transform.rotation;
+
         rightSideObj.GetComponent<MeshFilter>().mesh = right_HalfMesh;
 
 
@@ -647,4 +649,19 @@ public class MeshCut
         }
 
     }
+
+    public static void UpdatePivot(GameObject obj) {
+        MeshFilter mf =  obj.GetComponent<MeshFilter>();
+        Mesh m = mf.mesh;
+		Vector3 diff = Vector3.Scale(m.bounds.extents, new Vector3(0f,0f,0f));
+        diff = -m.bounds.center;
+		obj.transform.position -= Vector3.Scale(diff, obj.transform.lossyScale); 
+		Vector3[] verts = m.vertices;
+		for(int i=0; i<verts.Length; i++) {
+			verts[i] += diff;
+		}
+		m.vertices = verts; 
+		m.RecalculateBounds();
+        mf.mesh = m;
+	}
 }
