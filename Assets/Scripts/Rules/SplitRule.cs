@@ -46,11 +46,11 @@ public class SplitRule : IRule {
                     break;
                     case SplitAxis.Y:
                         a = -g.transform.up;
-                        size = g.transform.localScale.y;     
+                        size = g.transform.lossyScale.y;     
                     break;
                     case SplitAxis.Z:
                         a = -g.transform.forward;
-                        size = g.transform.localScale.z;    
+                        size = g.transform.lossyScale.z;    
                     break;
                 }
 
