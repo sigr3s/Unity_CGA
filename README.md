@@ -107,6 +107,17 @@ In this case the 0.7% of the remaining space will be distributed as 2*(0.7/3) fo
         
 The subdivision rule does not support context.
 
+## Random
+
+To add random to a set of instructions there should be a block of n instructions with their percentage as follows:
+      
+        S(1.0,1.1,1.0):0.25
+        S(1.0,1.2,1.0):0.25
+        S(1.0,1.0,1.0):0.25
+        S(1.0,1.3,1.0):0.25
+        
+ Note that it should sum 1.
+
 ## UI
 
 ![D1](https://github.com/sigr3s/Unity_CGA/blob/master/documentation/d1.PNG "")
