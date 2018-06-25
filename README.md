@@ -38,7 +38,9 @@ The supported values inside the "" region are the ones listed in the table:
 | ------------- |
 | cube      | 
 | cylinder      | 
-| roof | 
+| roofA | 
+| roofB |
+| window |  
 
 
 ### Position
